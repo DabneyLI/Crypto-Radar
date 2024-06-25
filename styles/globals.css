@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,18 +18,39 @@
   }
 }
 
-/*body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}*/
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f3f4f6;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #ffffff;
+  font-size: 14px; /* 调整全局字体大小 */
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px; /* 调整标题大小 */
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px; /* 调整副标题大小 */
+  margin-bottom: 15px;
+}
+
+p, a {
+  font-size: 14px; /* 调整正文和链接文字大小 */
+}
+
+.container {
+  padding-left: 56px; /* 确保内容不会覆盖侧边栏 */
+  padding-right: 16px;
+}
+
+@media (max-width: 768px) {
+  .pl-56 {
+    padding-left: 16px; /* 在小屏幕上减少内边距 */
+  }
 }
 
 @layer utilities {

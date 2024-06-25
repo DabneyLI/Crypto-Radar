@@ -1,6 +1,7 @@
-/*// pages/index.js
+// pages/index.js
 import React, { useState } from 'react';
 import InvestmentChart from '../components/InvestmentChart';
+import InvestmentCard from '../components/InvestmentCard';
 import { investmentData } from '../data/data';
 
 const Home = () => {
@@ -22,11 +23,27 @@ const Home = () => {
   const investors = [...new Set(filteredData.map(item => item.investor))];
   const fields = [...new Set(filteredData.map(item => item.field))];
 
+  const colors = {
+    'Blockchain Service': '#1f77b4',
+    'Blockchain Infrastructure': '#ff7f0e',
+    'NFT': '#2ca02c',
+    'DeFi': '#d62728',
+    'Chain': '#9467bd',
+    'Social': '#8c564b',
+    'GameFi': '#e377c2',
+    'CeFi': '#7f7f7f',
+    'Stablecoin': '#bcbd22',
+    'Meme': '#17becf',
+    'DePin': '#1f77b4',
+    'AI': '#ff7f0e',
+    'RWA': '#2ca02c',
+  };
+
   const chartData = {
     labels: investors,
     datasets: fields.map((field, index) => ({
       label: field,
-      backgroundColor: `hsl(${index * 60}, 70%, 50%)`,
+      backgroundColor: colors[field] || `#${Math.floor(Math.random()*16777215).toString(16)}`, // 如果没有指定颜色，则随机生成
       data: investors.map(investor => {
         const totalInvestment = filteredData
           .filter(item => item.investor === investor)
@@ -45,83 +62,9 @@ const Home = () => {
         stacked: true,
       },
       y: {
-        beginAtZero: true,
-        stacked: true,
-        ticks: {
-          callback: value => `${value}%`,
-        },
-      },
-    },
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Crypto Radar: Insights into Crypto Trends</h1>
-      <div className="flex space-x-4 mb-6">
-        <div>
-          <label className="block text-gray-700">Start Date</label>
-          <input
-            type="date"
-            name="start"
-            value={startDate}
-            onChange={handleDateChange}
-            className="border border-gray-300 rounded-md p-2"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700">End Date</label>
-          <input
-            type="date"
-            name="end"
-            value={endDate}
-            onChange={handleDateChange}
-            className="border border-gray-300 rounded-md p-2"
-          />
-        </div>
-      </div>
-      <InvestmentChart chartData={chartData} options={options} />
-    </div>
-  );
-};
-
-export default Home;*/
-
-// pages/index.js
-import React from 'react';
-import InvestmentCard from '../components/InvestmentCard';
-import InvestmentChart from '../components/InvestmentChart';
-import { investmentData } from '../data/data';
-
-const Home = () => {
-  const chartData = {
-    labels: ['Coinbase', 'Digital Currency Group', 'Paradigm', 'Pantera Capital', 'Ribbit Capital'],
-    datasets: [
-      {
-        label: 'DeFi',
-        backgroundColor: 'blue',
-        data: [16, 15, 12, 11, 10],
-      },
-      {
-        label: 'NFT',
-        backgroundColor: 'red',
-        data: [5, 6, 7, 8, 9],
-      },
-      {
-        label: 'Infrastructure',
-        backgroundColor: 'green',
-        data: [2, 3, 4, 5, 6],
-      },
-    ],
-  };
-
-  const options = {
-    scales: {
-      x: {
-        stacked: true,
-      },
-      y: {
         stacked: true,
         beginAtZero: true,
+        max: 100,
         ticks: {
           callback: function(value) {
             return value + '%';
@@ -132,34 +75,36 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Top Crypto Funds</h1>
-      <div className="mb-6 p-6 bg-white shadow-md rounded-md">
-        <h2 className="text-xl font-semibold mb-4">Fund of the Day!</h2>
-        <div className="flex items-center">
-          <div className="w-16 h-16 bg-gray-200 rounded-full mr-4"></div>
-          <div>
-            <h3 className="text-lg font-bold">Big Brain Holdings</h3>
-            <p className="text-gray-600">ROI: 5.18x</p>
+    <div className="pl-8 pt-20 pr-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Top Crypto Funds</h1>
+        <div className="mb-6 p-6 bg-white shadow-md rounded-md">
+          <h2 className="text-xl font-semibold mb-4">Fund of the Day!</h2>
+          <div className="flex flex-wrap items-center">
+            <div className="w-16 h-16 bg-gray-200 rounded-full mr-4"></div>
+            <div>
+              <h3 className="text-lg font-bold">Big Brain Holdings</h3>
+              <p className="text-gray-600">ROI: 5.18x</p>
+            </div>
+            <button className="ml-auto bg-primary text-white px-4 py-2 rounded-md transition duration-200 hover:bg-secondary">View</button>
           </div>
-          <button className="ml-auto bg-blue-500 text-white px-4 py-2 rounded-md transition duration-200 hover:bg-blue-600">View</button>
         </div>
-      </div>
 
-      <div className="mb-6 p-6 bg-white shadow-md rounded-md">
-        <h2 className="text-xl font-semibold mb-4">Top Crypto Funds by ROI</h2>
-        <div className="grid grid-cols-5 gap-6">
-          <InvestmentCard title="USV" roi="43.3" projects="19" />
-          <InvestmentCard title="Andreessen Horowitz" roi="38.0" projects="4" />
-          <InvestmentCard title="Paradigm" roi="24.2" projects="31" />
-          <InvestmentCard title="Pantera Capital" roi="20.8" projects="24" />
-          <InvestmentCard title="Ribbit Capital" roi="17.8" projects="17" />
+        <div className="mb-6 p-6 bg-white shadow-md rounded-md">
+          <h2 className="text-xl font-semibold mb-4">Top Crypto Funds by ROI</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <InvestmentCard title="USV" roi="43.3" projects="19" />
+            <InvestmentCard title="Andreessen Horowitz" roi="38.0" projects="4" />
+            <InvestmentCard title="Paradigm" roi="24.2" projects="31" />
+            <InvestmentCard title="Pantera Capital" roi="20.8" projects="24" />
+            <InvestmentCard title="Ribbit Capital" roi="17.8" projects="17" />
+          </div>
         </div>
-      </div>
 
-      <div className="p-6 bg-white shadow-md rounded-md">
-        <h2 className="text-xl font-semibold mb-4">Investment Chart</h2>
-        <InvestmentChart chartData={chartData} options={options} />
+        <div className="p-6 bg-white shadow-md rounded-md">
+          <h2 className="text-xl font-semibold mb-4">Investment Chart</h2>
+          <InvestmentChart chartData={chartData} options={options} />
+        </div>
       </div>
     </div>
   );
